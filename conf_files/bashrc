@@ -1,0 +1,106 @@
+export 	HOME=/home/$LOGNAME
+export SRC=yes
+export LC_COLLATE=C
+
+export EDITOR=vim
+alias host='echo $HOSTNAME' 
+umask 	022
+
+# Set up shell environment:
+#stty erase "^H"
+history=200		# previous commands to remember.
+savehist=20		# number to save across sessions.
+
+if [ $TERM == unknown ] 
+then
+	export TERM xterm
+fi
+
+# cd spelling mistakes 
+shopt -s cdspell
+
+svnclean()
+{
+       svn status | rm -rf $(awk '/^?/{$1 = ""; print $0}')
+       #svn status . | rm -rf $( sed 's/^?\s\+//g' )
+}
+
+#sivag@<host-name>:<path>
+PS1='$LOGNAME@\h:\w]'
+
+#Useful while walking through File system
+alias ..="cd .."                                  #1 step
+alias ...="cd ../.."     	                  #2 steps
+alias ....="cd ../../.."                          #3 steps
+alias .....="cd ../../../.."                      #4 steps
+alias ......="cd ../../../../.."                  #5 steps
+alias .......="cd ../../../../../.."              #6 steps
+alias ........="cd ../../../../../../.."          #7 steps
+alias .........="cd ../../../../../../../.."      #8 steps
+alias ..........="cd ../../../../../../../../.."  #9 steps
+
+#Another way of walking file system
+up ()
+{
+count=${1:-1} #Num levels up
+num=0 && path=""
+while [ $num -lt $count ]
+do
+    path="${path}../"
+    num=$((num+1))
+done
+cd $path
+}
+
+#Another way of walking file system
+go ()
+{
+val=$1 && [ "$1" = "" ] && return
+tpath=""
+for dir in $(echo $(pwd) | tr '/' ' ')
+do
+    tpath="$tpath/$dir"
+    [ "$dir" = "$val" ] && break
+done
+cd $tpath
+}
+
+alias vi='vim '
+alias c=clear
+alias svndiff='svn diff --diff-cmd diff-wrap.sh'
+
+#Note: set default mailid
+sm ()
+{
+local res=$?
+local mailid=          #------->set default mail id here
+local subject
+local list=
+
+while [ "$1" ]; do
+	case $1 in
+	-s) [ -z "$2" ] && echo "Usage: $0 [ -s \"<SUBJECT>\" ] [-g]" && return;
+	    subject=$2;
+	    shift 2;;
+	-g) mailid="sivakrishnagudivada@gmail.com"; shift;;
+	-l) shift; list=$list";"$2;
+	    shift 2;;
+	*) break;;
+	esac
+done
+
+if [ -z "$subject" ]; then
+	subject="One of the long running process is done now"
+fi
+
+if [ -z "$mailid" ]; then
+	echo "mailid is not set. please set before using sm"
+	exit 1
+fi
+
+/usr/sbin/sendmail -oi -t <<EOF
+From: sivag
+To: $mailid
+Subject: $subject
+EOF
+}
