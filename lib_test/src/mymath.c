@@ -1,8 +1,10 @@
+#include <stdio.h>
 #include "mymath.h"
+#include "mymath_dep.h"
 
 int add (int a, int b)
 {
-    return a + b;
+    return myadd_dep(a, b);
 }
 
 int sub (int a, int b)
