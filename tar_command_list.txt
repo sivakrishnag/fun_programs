@@ -1,0 +1,12 @@
+Tar commands
+1. tar -cvf archive.tar backup/	             # Creates an archive.tar with backup folder
+2. tar  -cvzf archive.tar.gz  backup/        # With -z, Creates a compressed archive. you can give .tgz as extension instead of .tar.gz
+3. tar  -cvjf  archive.tar.bz2 backup/       # With -j, Creates a bzip2 compressed archive.
+4. tar -tvf archive.tar	                     # Just displays the contents
+5. tar -xvf archive.tar	                     # Extracts the contents of archive.tar
+6. tar -xvzf archive.tar.gz                  # uncompress and untar archive.tar.gz
+7. tar -xvjf  archive.tar.bz2                # Uncompress and untar archive.tar.bz2
+8. gzip archive.tar	                     # Compresses the file and gives .gz extension automatically.
+9. gunzip archive.tar.gz                     # Uncompress the .gz file.  Here, Uncompresses archive.tar.gz to archive.tar.
+10. bzip2 archive.tar                        # Compresses the file and gives .bz2 extension automatically.
+11. bunzip2 archive.tar.bz2		     # Uncompresses the file and gives .bz2 extension automatically.
