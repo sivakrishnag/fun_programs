@@ -15,7 +15,6 @@
 int
 daemonize(char *err, int len)
 {
-    int fd0, fd1, fd2;
     int pid_file_fd;
     pid_t pid;
     char tmp_buf[1024];
@@ -45,7 +44,7 @@ daemonize(char *err, int len)
     /* Only child can enter this point*/
 
     /* Create a new session */
-    if (setsid() == -1) {
+    if (setsid() < 0) {
 	snprintf (err, len, "%s: Can't create a new session\n", __FUNCTION__);
 	return 1;
     }
@@ -60,18 +59,6 @@ daemonize(char *err, int len)
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
-
-    /* Attach file descriptors 0, 1 and 2 to /dev/null */
-    fd0 = open("/dev/null", O_RDWR);
-    fd1 = dup(fd0);
-    fd2 = dup(fd1);
-
-    /* Initialize the log file */
-    if (fd0 != STDIN_FILENO || fd1 != STDOUT_FILENO || fd2 != STDERR_FILENO) {
-	snprintf (err, len, "unexpected file descriptors %d %d %d",
-		  fd0, fd1, fd2);
-	return 1;
-    }
 
     ftruncate(pid_file_fd, 0);
     snprintf(tmp_buf, sizeof(tmp_buf), "%d", getpid());
