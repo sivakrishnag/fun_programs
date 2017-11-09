@@ -73,8 +73,8 @@ void sig_handler(int signo)
 	case SIGTERM:
 	    if (access(SIMPLED_PID_FILE, F_OK) == 0) {
 		unlink(SIMPLED_PID_FILE);
-		exit (0);
 	    }
+	    exit (0);
 	default:
 	    break;
     }
