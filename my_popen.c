@@ -148,19 +148,19 @@ my_pclose(FILE *fp)
 
 int main ()
 {
-    FILE *fpin;
+    FILE *fp;
     char line[BUFSIZ];
 
-    if ((fpin = my_popen("./misc/print_from_1_to_n_with_sleep1.sh",  "r")) == NULL) {
+    if ((fp = my_popen("./misc/print_from_1_to_n_with_sleep1.sh",  "r")) == NULL) {
         fprintf (stderr, "popen error\n");
         exit(EXIT_FAILURE);
     }
 
-    while (fgets(line, BUFSIZ, fpin) != NULL) {
+    while (fgets(line, BUFSIZ, fp) != NULL) {
         fprintf (stdout, "Read %s", line);
     }
 
-    if (my_pclose(fpin) == -1) {
+    if (my_pclose(fp) == -1) {
         fprintf (stderr, "pclose error\n");
         exit(EXIT_FAILURE);
     }
