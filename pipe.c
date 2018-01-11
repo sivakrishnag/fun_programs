@@ -49,7 +49,7 @@ int main ()
 	fprintf (stderr, "Failed to fork a child:%s\n", strerror(errno));
 	exit(EXIT_FAILURE);
     case 0:  /* Child */
-	close(fd[1]);	      /* Close read-end of the pipe */
+	close(fd[1]);	      /* Close write-end of the pipe */
 	while ((n = read(fd[0], buf, sizeof(buf)))) {
 	    buf[n] = '\0';
 	    fprintf(stdout, "From Child: Read '%s' (%d) from pipe\n", buf, n);

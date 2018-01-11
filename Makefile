@@ -1,7 +1,7 @@
 
 CFLAGS += -pthread -Wall -Werror
 
-all: pthread_mutex simple_daemon pipe
+all: pthread_mutex simple_daemon pipe my_popen
 
 pthread_mutex: pthread_mutex.c pthread_bad_cnt.c pthread_semaphore_mutex.c
 	gcc pthread_mutex.c -o pthread_mutex ${CFLAGS}
@@ -14,9 +14,14 @@ simple_daemon: simple_daemon.c
 pipe: pipe.c
 	gcc pipe.c -o pipe ${CFLAGS}
 
+my_popen: my_popen.c
+	gcc my_popen.c -o my_popen ${CFLAGS}
+	
+
 clean:
 	rm -rf pthread_mutex
 	rm -rf pthread_mutex_bad_cnt
 	rm -rf pthread_semaphore_mutex
 	rm -rf simple_daemon
 	rm -rf pipe
+	rm -rf my_popen
