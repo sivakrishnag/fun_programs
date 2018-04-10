@@ -19,6 +19,29 @@ by host program gathering pointers to functions exposed by plugins and then
 calling those pointers as per its need.
 Eg: Any big software framework like snort.
 
+Below are some example constructs which may aid in creating your pointer.
+
+int i;             // integer variable 'i'
+int *p;            // pointer 'p' to an integer
+int a[];           // array 'a' of integers
+int f();           // function 'f' with return value of type integer
+int **pp;          // pointer 'pp' to a pointer to an integer
+int (*pa)[];       // pointer 'pa' to an array of integer
+int (*pf)();       // pointer 'pf' to a function with return value integer
+int *ap[];         // array 'ap' of pointers to an integer
+int *fp();         // function 'fp' which returns a pointer to an integer
+int ***ppp;        // pointer 'ppp' to a pointer to a pointer to an integer
+int (**ppa)[];     // pointer 'ppa' to a pointer to an array of integers
+int (**ppf)();     // pointer 'ppf' to a pointer to a function with return value of type integer
+int *(*pap)[];     // pointer 'pap' to an array of pointers to an integer
+int *(*pfp)();     // pointer 'pfp' to function with return value of type pointer to an integer
+int **app[];       // array of pointers 'app' that point to pointers to integer values
+int (*apa[])[];    // array of pointers 'apa' to arrays of integers
+int (*apf[])();    // array of pointers 'apf' to functions with return values of type integer
+int ***fpp();      // function 'fpp' which returns a pointer to a pointer to a pointer to an int
+int (*fpa())[];    // function 'fpa' with return value of a pointer to array of integers
+int (*fpf())();    // function 'fpf' with return value of a pointer to function which returns an integer
+
 
 Re-entrant functions: A function is said to be reentrant if it can be
 interrupted in the middle of its execution and then safely called again
@@ -42,3 +65,8 @@ Thread-safety can be achieved by following approaches:
     2. Atomic operations.
 
 Note: A re-entrant function can always be thread-safe but the converse may not be true.
+
+Endianness : Refers to the sequential order in which bytes are arranged in
+stored in memory.
+Big Endian vs Litte Endian
+Big Endian : Most significant byte is stored first
