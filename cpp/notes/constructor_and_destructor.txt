@@ -1,8 +1,9 @@
-1. It is a special function that is invoked automatically when the instance is
-created.
-2. It is used to initialize the state of object during creation.
-3. A constructor doesn't have any return type but it can accept arguments.
-4. A constructor can be overloaded.
+===Constructor===
+. It is a special function that is invoked automatically when an instance of a
+  class is created.
+. It is used to initialize the state of object during creation.
+. A constructor doesn't have any return type but it can accept arguments.
+. A constructor can be overloaded.
 
 There are different types of constructors that we can create in a class
 * Default
@@ -11,32 +12,32 @@ There are different types of constructors that we can create in a class
 * Delegating
 * Inheriting
 
-**Default**
-A default constructor does not accept any arguments.
-It is automatically invoked when an object is invoked without any arguments.
-It may be automatically synthesized by the compiler. But this is done only if 
-there are not user-defined constructors in the class.
+==Default==
+. A default constructor does not accept any arguments
+. It is automatically invoked when an object is created without any arguments
+. It may be automatically synthesized by the compiler. But this is done only if 
+  there are no user-defined constructors in the class
 
-**Parameterized**
-A parameterized constructor has one or more arguments.
-It is used to initialize the objects with user defined values.
-The compiler will never synthesize the parameterized constructor.
-If a class contains parameterized constructor, that will block the 
- automatic creation of default constructor.
+==Parameterized==
+. A parameterized constructor has one or more arguments
+. It is used to initialize the objects with user defined values
+. The compiler will never synthesize the parameterized constructor
+. If a class contains parameterized constructor, that will block the automatic
+  creation of default constructor.
 
 
-***Destructor***
-A destructor is a special function that is automatically invoked when an object
-is destroyed.
-A constructor may acquire some resources when an object is created.
-The destructor can be used to release those resources when the object is
-destroyed.
-A class can have only one destructor and it cannot be overloaded.
-Therefore it does not accept any arguments.
-A destructor function has same the name as that of a class but begins with
-~(tilde).
-If the user has not provided any destructor, then the compiler will synthesize
-one if required.
+===Destructor===
+. A destructor is a special function that is automatically invoked when an
+  object is destroyed.
+. A constructor may acquire some resources when an object is created.
+  The destructor can be used to release those resources when the object is 
+  destroyed.
+. A class can have only one destructor and it cannot be overloaded.
+  Therefore it does not accept any arguments.
+. A destructor function has same the name as that of a class but begins with
+  ~(tilde).
+. If the user has not provided any destructor, then the compiler will synthesize
+  one if required.
 
 Example:
 class Car {
@@ -69,7 +70,3 @@ private:
    float speed;
    int passengers;
 };
-
-
-
-
