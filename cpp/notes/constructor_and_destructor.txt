@@ -25,6 +25,148 @@ There are different types of constructors that we can create in a class
 . If a class contains parameterized constructor, that will block the automatic
   creation of default constructor.
 
+==Copy Constructor==
+. A copy constructor is used to create copy of an object.
+. The copy is created by copying the values of the member variables into
+  another object
+. If the user has not provided a copy constructor, then the compiler will
+  synthesize one automatically. 
+. The default implementation of the synthesized copy constructor will simply
+  copy values. This may be undesirable in some cases especially when you have
+  pointers as members of a class.
+
+Let us understand the copy constructor using an example:
+class Integer {
+    int *m_pInt;
+public:
+    Integer();
+    Integer(int value);
+    int GetValue() const;
+    void SetValue(int value);
+    ~Integer();
+};
+
+Integer::Integer() {
+   m_pInt = new int(0);
+}
+
+Integer::Integer(int value) {
+   m_pInt = new int(value);
+}
+
+int Integer::GetValue() const {
+   return *m_pInt;
+}
+
+void Integer::SetValue(int value) {
+   *m_pInt = value;
+}
+
+~Integer() {
+  delete m_pInt;
+}
+
+int main() {
+  Integer i(5);
+  std::cout << i.GetValue() << std::endl;
+  return 0;
+}
+
+What if we want to create a copy of the integer object 'i'.
+The copy of an object gets created when
+1. An object is passed as value into a function
+
+   example:
+   void Print(Integer i)
+   {
+   }
+
+2. When a function returns an object by value
+
+   example:
+   Integer Add(int x, int y)
+   {
+    return Integer(x + y);
+   }
+
+3. When you manually create a copy of a variable;:w
+   example:
+   int main() {
+       Integer i(5);
+       Integer i2(i);        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+       std::cout << i.GetValue() << std::endl;
+       return 0;
+   }
+
+In all these cases, the copy of the Integer object is created.
+In all these 3 cases, compiler would synthesize a copy constructor for this class
+even though we have not created it.
+
+The example described in case #3 has a dangerous problem because of the shallow
+copy of pointers.
+When the scope of the object 'i' completes, the destructor of the object 'i'
+gets invoked and the pointer m_pInt gets deleted.
+When the scope of the object 'i2' completes, the destructor of the object 'i2'
+gets invoked and the pointer m_pInt gets double freed which originally got deleted from 
+the destructor of 'i'
+
+Let us check the example of a shallow and deep copy
+int main ()
+{
+   int *p1 = new int(5);
+   // Shallow copy
+   int *p2 = p1;
+
+   // Deep copy
+   int *p3 = new int(*p1);
+
+   return 0;
+}
+
+A copy gets created when one object is assigned to another object.
+Example:
+  i = i2;
+
+This happens through copy assignment eventhough we haven't provided any
+assignment operator in our class. The compiler synthesizes one for us just like
+it synthesizes copy constructor.
+The default implementation of this assigment operator will perform shallow copy
+of i into i2.
+
+To avoid the problems due to shallow copy, we have to perform deep copy using
+copy constructor
+
+The copy constructor will accept a reference of an object of its own class type
+Also observe that the const qualifier. This is to avoid modifying the state of
+the object being passed to copy constructor.
+example:
+   Integer (const Integer &obj) {
+   }
+
+Without the reference, a copy of object will be created again by invoking copy
+constructor. This will go into loop.
+Let us proceed with the implementation of a copy constructor.
+
+   Integer (const Integer &obj) {
+     m_pInt = new int (obj.m_pInt);
+   }
+
+This is called deep copy.
+
+RULE of 3
+~~~~~~~~~
+The Rule of 3 says that if a user has implemented any of the following
+functions, then it should probably implement all the other functions.
+.. Destructor
+.. Copy Constructor
+.. Copy assignment operator
+
+May be the user has implemented the destructor, why ?
+The constructor of the class may be acquiring resources, may be allocating
+memory. Hence destructor is written to freeup the resources.
+In that case, the user may have to implement Copy constructor and Copy
+assignemnt operator so that they can perform deep copy.
+Without them, there will be memory leak or shallow copy.
 
 ===Destructor===
 . A destructor is a special function that is automatically invoked when an
