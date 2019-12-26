@@ -1,20 +1,20 @@
 Structures
-================
-The other way to create a user defined type in C++ is through the keyword
-struct.
-It is very similar to the class. There is almost no difference between a class and a struct.
+==========
+. The other way to create a user defined type in C++ is through the
+  keyword struct
+. It is very similar to the class.
+. There is almost no difference between a class and a struct.
+  The only difference is that by default the access to the members in a struct
+  is public if no access modifier is specified. But in class, the default access
+  modifier is private.
 
-The only difference is that by default the access to the members in a struct is
-public if no access modifier is specified. But in class, the default access
-modifier is private.
+. In C++, the structures are used to represent the abstract data types or record
+  like structures that needs to have public access to their members.
+. Although we can represent those types with classes as well but using structures
+  is more convinient because all the members have public access.
 
-In C++, the structures are used to represent the abstract data types or record
-like structures that needs to have public access to their members.
-Although we can represent those types with classes as well but using structures
-is more convinient because all the members have public access.
-
-Structures are also used for creating function objects.
-Function objects are used as callbacks in standard template library.
+. Structures are also used for creating function objects.
+  Function objects are used as callbacks in standard template library.
 
 Example:
 #include <iostream>
