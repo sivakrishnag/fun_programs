@@ -1,0 +1,42 @@
+In C++ 11, we can intialize the member variables in the class declaration itself.
+This is known as non-static data member intializers.
+
+Instead of initializing the members in constructors, we can initialize them during declaration.
+We may use standard way of initialization or we may use the uniform initialization.
+The advantage of doing this is that the member variables are always initialized
+with valid values. Even if you have not initialize them in the constructors.
+This way we can initialize them at any time.
+
+The type could be a variable, pointer, array or even a user defined object.
+
+To initialize the member variables, the compiler will automatically generate
+the initialization code and this code is inserted into the constructors.
+
+If the user has not implemented any constructor at all, then the compiler will
+synthesize one and will insert the initialization code in that constructor.
+
+We can also initialize a member variable in user defined constructor. In that
+case the member variables will be initialized with the values in user defined
+constructor rather than the values that are used in the declaration of the
+constructors.
+
+Example:
+class Car {
+public:
+    Car();
+    Car(float amount);
+    void FillFuel(float amount);
+    void Accelerate():
+    void Brake();
+    void AddPassengers(int count);
+    void Dashboard();
+    ~Car();
+
+private:
+    float fuel{ 0 };     //non-static data member initialization.
+    float speed{ 0 };
+    int passengers{ 0 };
+    int array[5] = { 1, 2, 3};
+    char *p{};
+    char *p1 = new char;
+};

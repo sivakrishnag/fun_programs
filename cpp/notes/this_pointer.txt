@@ -1,0 +1,43 @@
+* All the member functions of a class accept a hidden parameter called this
+  pointer.
+* The compiler automatically passes it to the member functions.
+* 'this' pointer contains the address of the object that invokes the member
+  function.
+* 'this' allows the member function to differentiate between different objects that
+  invoke it.
+* 'this' pointer is also a keyword but it has meaning only in member functions.
+* When we access members of a class insided the member functions, the compiler
+  will internally uses this pointer to access them.
+* So you may use this pointer as a prefix while accessing the members but it is
+  optional.
+* You cannot assign any address to this pointer as it is a constant.
+
+If 'this' pointer is optional, then why do we use it ??
+
+Consider the below example
+
+void Car::AddPassengers(int passengers)
+{
+   passengers = passengers;
+}
+
+In this example, 'passengers' is a local variable which will hide the member variable 'passengers' in
+the class.
+
+The below expression will simply assign the local variable passsengers to itself.
+   passengers = passengers;
+
+To help the compiler distinguish between the member variable and the local
+variable that have the same name, we use the 'this' pointer on the member
+variable.
+
+void Car::AddPassengers(int passengers)
+{
+   this->passengers = passengers;
+}
+
+This way the compiler knows this refers to the member variable passengers.
+Without this pointer it would have been impossible to disambiguate the local
+variable 'passengers' and member variable 'passengers'
+
+
