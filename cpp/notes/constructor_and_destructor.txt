@@ -36,6 +36,7 @@ There are different types of constructors that we can create in a class
   pointers as members of a class.
 
 Let us understand the copy constructor using an example:
+#include<iostream>
 class Integer {
     int *m_pInt;
 public:
@@ -62,7 +63,7 @@ void Integer::SetValue(int value) {
    *m_pInt = value;
 }
 
-~Integer() {
+Integer::~Integer() {
   delete m_pInt;
 }
 
@@ -89,7 +90,7 @@ The copy of an object gets created when
     return Integer(x + y);
    }
 
-3. When you manually create a copy of a variable;:w
+3. When you manually create a copy of a variable
    example:
    int main() {
        Integer i(5);
@@ -176,7 +177,7 @@ Without them, there will be memory leak or shallow copy.
   destroyed.
 . A class can have only one destructor and it cannot be overloaded.
   Therefore it does not accept any arguments.
-. A destructor function has same the name as that of a class but begins with
+. A destructor function has the same name as that of a class but begins with
   ~(tilde).
 . If the user has not provided any destructor, then the compiler will synthesize
   one if required.
@@ -184,28 +185,28 @@ Without them, there will be memory leak or shallow copy.
 Example:
 class Car {
 public:
-Car ()
-{
-  std::cout << "Car()" << std::endl;
-  
-  fuel = 0;
-  speed = 0;
-  passengers = 0;
-}
-
-Car (float amount)
-{
-  std::cout << "Car(float amount)" << std::endl;
-
-  fuel = amount;
-  speed = 0;
-  passengers = 0;
-}
-
-~Car ()
-{
-  std::cout << "~Car()" << std::endl;
-}
+   Car ()
+   {
+     std::cout << "Car()" << std::endl;
+     
+     fuel = 0;
+     speed = 0;
+     passengers = 0;
+   }
+   
+   Car (float amount)
+   {
+     std::cout << "Car(float amount)" << std::endl;
+   
+     fuel = amount;
+     speed = 0;
+     passengers = 0;
+   }
+   
+   ~Car ()
+   {
+     std::cout << "~Car()" << std::endl;
+   }
 
 private:
    float fuel;

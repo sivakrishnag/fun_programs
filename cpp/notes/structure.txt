@@ -11,12 +11,12 @@ Structures
 . In C++, the structures are used to represent the abstract data types or record
   like structures that needs to have public access to their members.
 . Although we can represent those types with classes as well but using structures
-  is more convinient because all the members have public access.
+  is more convenient because all the members have public access.
 
-. Structures are also used for creating function objects.
+. Structures are also used for creating function objects (a.k.a functors).
   Function objects are used as callbacks in standard template library.
 
-Example:
+Example #1:
 #include <iostream>
 struct Point {
   int x;
@@ -36,4 +36,20 @@ void DrawLine(Point start, Point end)
 int main ()
 {
   return 0;
+}
+
+
+Example #2: (Functors)
+#include <iostream>
+struct Functor {
+    bool operator()(int a, int b)
+    {
+        return a < b;
+    }
+};
+
+int main ()
+{
+    Functor f;
+    std::cout << "f(5, 7) = " << (f(5, 7) ? "True" : "False") << std::endl;
 }

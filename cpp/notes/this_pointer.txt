@@ -4,13 +4,13 @@
 * 'this' pointer contains the address of the object that invokes the member
   function.
 * 'this' allows the member function to differentiate between different objects that
-  invoke it.
+  invokes it.
 * 'this' pointer is also a keyword but it has meaning only in member functions.
-* When we access members of a class insided the member functions, the compiler
-  will internally uses this pointer to access them.
-* So you may use this pointer as a prefix while accessing the members but it is
+* When we access members of a class inside the member functions, the compiler
+  will internally uses 'this' pointer to access them.
+* So you may use 'this' pointer as a prefix while accessing the members but it is
   optional.
-* You cannot assign any address to this pointer as it is a constant.
+* You cannot assign any address to 'this' pointer as it is a constant.
 
 If 'this' pointer is optional, then why do we use it ??
 
@@ -36,8 +36,8 @@ void Car::AddPassengers(int passengers)
    this->passengers = passengers;
 }
 
-This way the compiler knows this refers to the member variable passengers.
-Without this pointer it would have been impossible to disambiguate the local
+This way the compiler knows 'this' refers to the member variable passengers.
+Without 'this' pointer it would have been impossible to disambiguate the local
 variable 'passengers' and member variable 'passengers'
 
 
