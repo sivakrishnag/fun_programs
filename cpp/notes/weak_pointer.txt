@@ -29,8 +29,7 @@ void observe()
     std::cout << "use_count == " << gw.use_count() << ": ";
     if (auto spt = gw.lock()) { // Has to be copied into a shared_ptr before usage
 	std::cout << *spt << "\n";
-    }
-    else {
+    } else {
         std::cout << "gw is expired\n";
     }
 }

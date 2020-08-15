@@ -1,0 +1,71 @@
+References
+----------
+
+- Defines an alternative name for a variable (an alias)
+- It is created with the & operator during declaration
+- Always needs an initalizer (called referent)
+- The referent should be a variable
+- It is bound to its referent
+- It can be used to modify a variable indirectly (like a pointer)
+- A reference is NOT a new variable; it is just another name.
+
+int x = 10;
+int &ref = x; //x is referent
+
+Here ref is reference to the variable x
+Which means ref is an alias(just another name) for x
+
+This can be proved by printing the addresess of both x and ref
+std::cout << &x << std::endl;
+std::cout << &ref << std::endl;
+
+The addresses will be exactly same.
+
+We can't just declare a reference like below without initializer (It leads to compilation error ).
+int &x;       (X)
+
+int &ref = nullptr;  // This is invalid and leads to compilation error
+
+int x = 10;
+int y = 10;
+int &ref = x;
+ref = y;  // This doesn't mean that ref is now bound to y. It just means that the value of y is being stored 
+
+Reference Vs Pointer
+====================
+       Reference 			       Pointer
+       ---------                               -------
+- Always needs an initializer 		- Initializer is optional
+- Initializer should be lvalue          - Initializer need not be lvalue
+- Cannot be nullptr                     - Can be nullptr
+- Bound to its referent                 - Can point to other variables
+- No storage required, so has same      - Has its own storage, so will have
+  address as that of referent             a different address
+- Dereference not required              - Required dereference operator to access the value
+
+
+Example
+-------
+void Swap (int &x, int &y)
+{
+   int temp = x;
+   x = y;
+   y = temp;
+}
+
+int main ()
+{
+  using namespace std;
+  int a = 5, b = 10;
+
+  Swap(a, b);
+  cout << "a: " << a << std::endl;
+  cout << "b: " << b << std::endl;
+  return 0;
+}
+
+Advantages
+---------
+Pass by reference is achieved with no additional memory
+Easier to read as dereference syntax is not needed
+Will never point to nullptr and hence we can safely use the variable without nullcheck

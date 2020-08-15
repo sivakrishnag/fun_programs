@@ -1,0 +1,38 @@
+Auto keyword
+------------
+- Indicates storage class of a variable in C & pre-C++11
+- Remnant of B language (which largely influenced C)
+- Meaning has been changed in C++11
+- Allows the compiler to automatically infer the type from the initializer
+- The initializer is important
+ 
+    auto <identifier> = <initializer>
+
+- <initializer> could be an expression that returns some value e.g. a literal,
+  mathematical expression or a function call that returns a value.
+
+#include <iostream>
+
+int main ()
+{
+  auto i = 10;   // type of i is int
+  auto sum = i + j;  // type sum becomes int
+  auto sum1 = i + 4.3f;  // type of sum1 becomes float
+
+  static auto y = 10;
+
+  const int x = 10;
+  auto var = x;   // Here qualifier of x which is const is discarded
+  const auto var1 = x;
+ 
+  auto &var2 = x;  // Here const qualifier of x will not be discarded
+  auto var3 = &x;  // Here const qualifier of x will not be discarded
+                   // * is not needed when an address is being assigned to an auto variable
+
+ // auto list {1, 2, 3, 4, 5, 6, 7}; // This is invalid and compiler cannot deduce the type of list as array of integers.
+  auto list {1};  // This is valid and compiler can happily deduce the type of list as int.
+  
+  
+  
+  return 0;
+} 

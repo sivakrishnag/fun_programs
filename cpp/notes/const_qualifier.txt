@@ -1,0 +1,50 @@
+Const qualifier
+--------------
+- Creates a variable that is constant
+- Value cannot be modified
+- Attempt to modify will cause compilation error
+- Qualified to a declaration, but always needs an initializer
+- Replaces C macros
+- Commonly used with references
+
+Syntax:
+   const <type> <variable> {initializer};
+eg:
+   const flat PI {3.141f};
+
+
+const qualifier with pointers
+-----------------------------
+#include <iostream>
+
+int main ()
+{
+  using namespace std;
+  
+  const int CHUNK_SIZE = 512;
+  int *ptr1 = &CHUNK_SIZE;   // This is invalid as using ptr, we can change the memory pointed by ptr
+  const int *ptr2 = &CHUNK_SIZE; // This is valid
+  
+  const int * const ptr3 = &CHUNK_SIZE; // This will make both ptr and the memory address pointed by ptr both to be constant
+
+  return 0;
+}
+
+const qualifier with references
+-------------------------------
+#include <iostream>
+
+void Print (const int &ref)
+{
+  using namespace std;
+  cout << ref << endl;
+}
+
+int main ()
+{
+  using namespace std;
+  int x = 5;
+  Print(5); // This is valid because ref in Print() is a const reference
+  Print(x);
+  return 0;
+}
