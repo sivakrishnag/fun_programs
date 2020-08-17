@@ -1,0 +1,55 @@
+/*
+ * Default keyword
+ * ---------------
+ * - This keyword has been introduced in c++11
+ * - This keyword can be used to explicitly request compiler to synthesize the methods
+ * - When a parameterized constructor is provided to a class,
+ *   compiler will not syntesize default constructor
+ *   Using default keyword compiler can requested to syntesize a default constructor.
+ * - Using default keyword, the compiler can only synthesize those methods that it generally can
+ *   eg: default constructor
+ *       copy constructor
+ *       assignment operator
+ *       destructor
+ **/
+
+#include <iostream>
+
+class Integer
+{
+  int m_Value{0};
+
+public:
+  Integer() = default; //Without this, compiler won't synthesize default constructor
+  
+  Integer(int value)
+  {
+    using namespace std;
+    cout << "Integer(int value)" << endl;
+    m_Value = value;
+  }
+
+  Integer(const Integer &) = default;
+};
+
+int main ()
+{
+  Integer i1; //This wouldn't have been possible without
+              //either default keyword or explicity default constructor code
+  Integer i2(3);
+
+  return 0;
+}
+
+delete keyword (In the context of classes)
+--------------
+- To tell the compiler not to synthesize a constructor/method by default, delete keyword can be used
+  eg: Integer(const Integer &) = delete;
+
+  Integer i2(i1); // This will not work as default copy constructor is not synthesized by the compiler
+
+- To avoid implicit type conversion during function overloading
+  eg: Integer(float value) = delete;
+      
+      Integer i(10);
+      Integer f(10.2f); // This will lead to compilation error.

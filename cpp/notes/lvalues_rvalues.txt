@@ -1,0 +1,57 @@
+L-value vs R-value
+==================
+L-Value								R-Value
+-------                         				-------
+- Has a name						- Doesn not have a name
+- All variables are l-values				- R-value is a temporary value
+- Can be assigned values				- Cannot be assigned values
+- Some expressions return l-value			- Some expressions return r-value
+- L-value persists beyond the expression 		- Does not persist beyond the expression
+- Functions that return by reference return l-value     - Functions that return by value return r-value
+- Reference to l-value(called l-value reference)	- R-value reference to r-value (called r-value reference)
+
+
+#include <iostream>
+
+//Returns r-value
+int Add(int x, int y)
+{
+  return x + y;
+}
+
+//Returns l-value
+int & Transform(int &x)
+{
+  x *= x;
+  return x;
+}
+
+int main ()
+{
+  // x,y & z are l-values & 5, 10 & 8 are r-values
+  int x = 5;
+  int y = 10;
+  int z = 8;
+
+  //Expression returns r-value
+  int result = (x + y) * z;
+
+  //Expression returns l-value
+  ++x = 6;
+
+  return 0;
+}
+
+
+R-Value references
+------------------
+- A reference created to a temporary
+- represents a temporary
+- Created with && operator
+- Cannot point to l-values
+- R-Value references always bind to temporaries
+- L-Value references always bind to L-values
+
+    int &&r1 = 10;	    //R-Value reference
+    int &&r2 = Add(5, 8);   //Add returns by value(temporary)
+    int &&r3 = 7 + 2;       //Expression return a temporary
