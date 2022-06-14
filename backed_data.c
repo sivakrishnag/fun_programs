@@ -10,11 +10,14 @@
 #define BACKING_FILE "/tmp/backing_file"
 #define MAX_ENTRIES 20
 
+typedef struct data_store_entry_s {
+   char key[32];
+   char value[32];
+} data_store_entry_t;
+
 typedef struct data_store_s {
     int num_entries;
-    char key[20][32];
-    char value[20][32];
-
+    data_store_entry_t entries[MAX_ENTRIES];
 } data_store_t;
 
 data_store_t *ds;
@@ -52,8 +55,8 @@ void set_value(char *key, char *value)
     }
     entry_index = ds->num_entries;
     
-    strncpy(ds->key[entry_index], key, sizeof(ds->key[entry_index]));
-    strncpy(ds->value[entry_index], value, sizeof(ds->value[entry_index]));
+    strncpy(ds->entries[entry_index].key, key, sizeof(ds->entries[entry_index].key));
+    strncpy(ds->entries[entry_index].value, value, sizeof(ds->entries[entry_index].value));
 
     ds->num_entries++;
 }
@@ -66,8 +69,8 @@ char *get_value(char *key)
     }
 
     for (i = 0; i < ds->num_entries; i++) {
-        if (strncmp(ds->key[i], key, strlen(ds->key[i])) == 0) {
-            return (char *)&ds->value[i];
+        if (strncmp(ds->entries[i].key, key, strlen(ds->entries[i].key)) == 0) {
+            return (char *)&ds->entries[i].value;
         }
     }
 
