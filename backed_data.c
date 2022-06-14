@@ -59,6 +59,8 @@ void set_value(char *key, char *value)
     strncpy(ds->entries[entry_index].value, value, sizeof(ds->entries[entry_index].value));
 
     ds->num_entries++;
+
+    msync(ds, sizeof(data_store_t), MS_SYNC);
 }
 
 char *get_value(char *key)
