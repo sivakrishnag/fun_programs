@@ -46,19 +46,31 @@ void init()
 
 void set_value(char *key, char *value)
 {
+    int idx;
     int entry_index;
+
     if (!ds) {
         return;
     }
     if (ds->num_entries > MAX_ENTRIES) {
         return;
     }
-    entry_index = ds->num_entries;
-    
-    strncpy(ds->entries[entry_index].key, key, sizeof(ds->entries[entry_index].key));
-    strncpy(ds->entries[entry_index].value, value, sizeof(ds->entries[entry_index].value));
 
-    ds->num_entries++;
+    for (idx = 0; idx < ds->num_entries; idx++) {
+        if (strcmp(ds->entries[idx].key, key) == 0) {
+            strncpy(ds->entries[idx].value, value, sizeof(ds->entries[idx].value));
+            break;
+        }
+    }
+
+    if (idx == ds->num_entries) {
+        entry_index = ds->num_entries;
+
+        strncpy(ds->entries[entry_index].key, key, sizeof(ds->entries[entry_index].key));
+        strncpy(ds->entries[entry_index].value, value, sizeof(ds->entries[entry_index].value));
+
+        ds->num_entries++;
+    }
 
     msync(ds, sizeof(data_store_t), MS_SYNC);
 }
