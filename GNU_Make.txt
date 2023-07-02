@@ -49,8 +49,10 @@ $(abspath names): Converts names to absolute paths.
 $(var:start): Extracts a substring starting from the start index.
 $(var:start,length): Extracts a substring starting from the start index with a given length.
 $(shell command): Executes the shell command and returns its output as a variable value.
-$(foreach var,list,text): Iterates over list, setting var to each element and expanding text for each iteration.
-$(if condition,then-part,else-part): Evaluates the condition and returns either the then-part or the else-part based on the result.
+$(foreach var,list,text): Iterates over list, setting var to each element and
+  expanding text for each iteration.
+$(if condition,then-part,else-part): Evaluates the condition and returns either
+  the then-part or the else-part based on the result.
 
 .PHONY
 ------
@@ -84,7 +86,9 @@ Declaring a target as phony has several benefits:
    This can improve the build process's efficiency, especially when dealing with
    targets that involve complex actions or commands.
 
-3. Consistency: By explicitly declaring targets as phony, you can convey the intention that those targets are meant to perform actions rather than generate files. This can improve the clarity and maintainability of your makefiles.
+3. Consistency: By explicitly declaring targets as phony, you can convey the
+   intention that those targets are meant to perform actions rather than generate files.
+   This can improve the clarity and maintainability of your makefiles.
 
 Here's an example that demonstrates the usage of .PHONY:
 
@@ -107,13 +111,21 @@ indicate that it performs a cleaning or deletion action and does not generate
 any output files.
 
 Note that declaring a target as phony does not prevent you from creating a file with the same name.
-It simply informs GNU Make of the target's intended purpose and how it should be treated during the build process.
+It simply informs GNU Make of the target's intended purpose and how it should
+be treated during the build process.
 
 pipe(|) in GNU Make
 -------------------
-In GNU Make, the | symbol, known as the pipe or vertical bar, is used to create an order-only prerequisite for a target.
+In GNU Make, the | symbol, known as the pipe or vertical bar, is used to create
+an order-only prerequisite for a target.
 
-By default, when you specify a prerequisite for a target, GNU Make ensures that the prerequisite is up to date before attempting to build the target. However, in some cases, you may have a target that depends on other files but doesn't actually use them during its build process. In such scenarios, you can use the | symbol to mark those prerequisites as order-only.
+By default, when you specify a prerequisite for a target, GNU Make ensures that
+the prerequisite is up to date before attempting to build the target.
+
+However, in some cases, you may have a target that depends on other files but
+doesn't actually use them during its build process.
+
+In such scenarios, you can use the | symbol to mark those prerequisites as order-only.
 
 The syntax for using the pipe symbol in GNU Make is as follows:
 
@@ -122,20 +134,41 @@ The syntax for using the pipe symbol in GNU Make is as follows:
 |    recipe                                       |
  --------------------------------------------------
 
-Here, target is the target that depends on both the regular prerequisites and the order-only-prerequisites. The recipe will be executed only if the regular prerequisites are out of date or the target does not exist. However, the order-only prerequisites are treated differently.
+Here, target is the target that depends on both the regular prerequisites and
+the order-only-prerequisites.
 
-Order-only prerequisites are only used to control the order in which targets are built. They do not trigger a rebuild of the target if they are modified or updated. They are useful when you want to ensure that certain files or directories exist before attempting to build the target but don't want changes in those order-only prerequisites to trigger a rebuild.
+The recipe will be executed only if the regular prerequisites are out of date
+or the target does not exist.
+
+However, the order-only prerequisites are treated differently.
+
+Order-only prerequisites are only used to control the order in which targets
+are built.
+They do not trigger a rebuild of the target if they are modified or updated.
+They are useful when you want to ensure that certain files or directories exist
+before attempting to build the target but don't want changes in those order-only
+prerequisites to trigger a rebuild.
 
 Here's an example to illustrate the usage of the pipe symbol:
 
-------------------------------------
-|output.txt: input.txt | data_dir  |
-|    cp input.txt output.txt       |
-|                                  |
-|data_dir:                         |
-|    mkdir data_dir                |
-------------------------------------
+-------------------------------------
+| output.txt: input.txt | data_dir  |
+|     cp input.txt output.txt       |
+|                                   |
+| data_dir:                         |
+|     mkdir data_dir                |
+-------------------------------------
 
-In the above example, output.txt depends on input.txt as a regular prerequisite and data_dir as an order-only prerequisite. The recipe for output.txt copies input.txt to output.txt. However, the data_dir target is marked as order-only because its existence is necessary for the build process, but changes in data_dir should not trigger a rebuild of output.txt.
+In the above example, output.txt depends on input.txt as a regular prerequisite
+and data_dir as an order-only prerequisite.
 
-By using the pipe symbol (|), you can define the dependencies in a way that ensures the order-only prerequisites are created or exist before building the target, but modifications to those order-only prerequisites will not cause the target to be rebuilt.
+The recipe for output.txt copies input.txt to output.txt.
+
+However, the data_dir target is marked as order-only because its existence is
+necessary for the build process, but changes in data_dir should not trigger a
+rebuild of output.txt.
+
+By using the pipe symbol (|), you can define the dependencies in a way that
+ensures the order-only prerequisites are created or exist before building the
+target, but modifications to those order-only prerequisites will not cause the
+target to be rebuilt.
