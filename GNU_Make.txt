@@ -1,0 +1,141 @@
+List of variable manipulation methods available in GNU Make
+===========================================================
+
+Variable Definition:
+--------------------
+variable = value: Defines a variable with simple expansion.
+variable := value: Defines a variable with immediate expansion.
+variable += value: Appends the value to the existing variable value.
+variable ?= value: Defines a variable if it is not already set.
+
+Variable References:
+-------------------
+$(variable), ${variable}: Retrieves the value of the variable.
+
+Built-in Variables:
+-------------------
+GNU Make provides numerous built-in variables like CC, CFLAGS, LDLIBS, and more.
+Refer to the GNU Make documentation for a comprehensive list.
+
+Automatic Variables:
+--------------------
+$@: The target.
+$<: The first prerequisite (dependency).
+$^: All prerequisites.
+$?: Prerequisites newer than the target.
+$*: The stem of the target filename.
+
+Variable Manipulation Functions:
+--------------------------------
+$(subst from,to,text): Replaces occurrences of from with to in text.
+$(patsubst pattern,replacement,text): Replaces matches of pattern with replacement in text.
+$(strip string): Removes leading and trailing whitespace from string.
+$(findstring find,in): Searches for find within in.
+$(filter pattern...,text): Filters text for words that match the specified pattern.
+$(filter-out pattern...,text): Filters text for words that do not match the specified pattern.
+$(sort list): Sorts the elements of list in lexical order.
+$(word n,text): Extracts the nth word from text.
+$(words text): Counts the number of words in text.
+$(firstword names): Extracts the first word from names.
+$(lastword names): Extracts the last word from names.
+$(dir names): Extracts the directory part of each file name in names.
+$(notdir names): Extracts the non-directory part of each file name in names.
+$(addprefix prefix,names): Adds prefix to each word in names.
+$(suffix names): Extracts the suffix of each file name in names.
+$(basename names): Extracts the base name (without suffix) of each file name in names.
+$(join list1,list2): Combines corresponding elements from list1 and list2.
+$(wildcard pattern): Matches files against a pattern and returns the matching file names.
+$(abspath names): Converts names to absolute paths.
+$(var:start): Extracts a substring starting from the start index.
+$(var:start,length): Extracts a substring starting from the start index with a given length.
+$(shell command): Executes the shell command and returns its output as a variable value.
+$(foreach var,list,text): Iterates over list, setting var to each element and expanding text for each iteration.
+$(if condition,then-part,else-part): Evaluates the condition and returns either the then-part or the else-part based on the result.
+
+.PHONY
+------
+In GNU Make, the .PHONY special target is used to declare a target as phony.
+A phony target is a target that does not represent a physical file but rather
+represents an action or a command.
+
+When you declare a target as phony using .PHONY, you are telling GNU Make that 
+the target is not expected to generate a file with the same name.
+This allows GNU Make to treat the target differently and not consider it up to
+date if a file with the same name exists.
+
+The syntax for using .PHONY is as follows:
+
+-------------------------------
+| .PHONY: target1 target2 ... |
+-------------------------------
+
+Here, target1, target2 and so on, are the targets that you want to declare as
+phony. You can list multiple targets seperated by spaces.
+
+Declaring a target as phony has several benefits:
+
+1. Avoiding Conflicts: By declaring a target as phony, you can avoid conflicts
+   that may arise if a file with the same name as the target exists.
+   GNU Make will not mistakenly consider the target up to date based on the
+   existence of such a file.
+
+2. Efficiency: When a target is declared as phony, GNU Make skips the file
+   existence check for that target.
+   This can improve the build process's efficiency, especially when dealing with
+   targets that involve complex actions or commands.
+
+3. Consistency: By explicitly declaring targets as phony, you can convey the intention that those targets are meant to perform actions rather than generate files. This can improve the clarity and maintainability of your makefiles.
+
+Here's an example that demonstrates the usage of .PHONY:
+
+ ------------------------
+| .PHONY: clean          |
+|                        |
+| clean:                 |
+|        rm -rf build/*  |
+ ------------------------
+
+In the above example, the target clean is declared as phony using .PHONY.
+The target's recipe removes the contents of the build directory.
+By declaring it as phony, you ensure that GNU Make recognizes clean as an action
+and not as a file.
+Thus, even if a file named clean exists in the directory, it won't interfere
+with the execution of the clean target.
+
+By convention, clean is often declared as a phony target in makefiles to
+indicate that it performs a cleaning or deletion action and does not generate
+any output files.
+
+Note that declaring a target as phony does not prevent you from creating a file with the same name.
+It simply informs GNU Make of the target's intended purpose and how it should be treated during the build process.
+
+pipe(|) in GNU Make
+-------------------
+In GNU Make, the | symbol, known as the pipe or vertical bar, is used to create an order-only prerequisite for a target.
+
+By default, when you specify a prerequisite for a target, GNU Make ensures that the prerequisite is up to date before attempting to build the target. However, in some cases, you may have a target that depends on other files but doesn't actually use them during its build process. In such scenarios, you can use the | symbol to mark those prerequisites as order-only.
+
+The syntax for using the pipe symbol in GNU Make is as follows:
+
+---------------------------------------------------
+|target: prerequisites | order-only-prerequisites |
+|    recipe                                       |
+ --------------------------------------------------
+
+Here, target is the target that depends on both the regular prerequisites and the order-only-prerequisites. The recipe will be executed only if the regular prerequisites are out of date or the target does not exist. However, the order-only prerequisites are treated differently.
+
+Order-only prerequisites are only used to control the order in which targets are built. They do not trigger a rebuild of the target if they are modified or updated. They are useful when you want to ensure that certain files or directories exist before attempting to build the target but don't want changes in those order-only prerequisites to trigger a rebuild.
+
+Here's an example to illustrate the usage of the pipe symbol:
+
+------------------------------------
+|output.txt: input.txt | data_dir  |
+|    cp input.txt output.txt       |
+|                                  |
+|data_dir:                         |
+|    mkdir data_dir                |
+------------------------------------
+
+In the above example, output.txt depends on input.txt as a regular prerequisite and data_dir as an order-only prerequisite. The recipe for output.txt copies input.txt to output.txt. However, the data_dir target is marked as order-only because its existence is necessary for the build process, but changes in data_dir should not trigger a rebuild of output.txt.
+
+By using the pipe symbol (|), you can define the dependencies in a way that ensures the order-only prerequisites are created or exist before building the target, but modifications to those order-only prerequisites will not cause the target to be rebuilt.
